@@ -1,0 +1,32 @@
+.static-bg-description {
+
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top:0;
+    text-align: center;
+    width: 100%;
+    position: relative;
+
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 6rem;
+    padding-top: 6rem;
+
+    color:white;
+
+    background-color: rgba(0,0,0,0.5);
+
+    .big-description-text {
+        font-size: 4.6rem !important;
+        font-weight: 800;
+        line-height: 1.1;
+        font-family: Montserrat;
+    }
+
+    .small-description-text{
+        font-size: 2.2rem;
+        font-weight: 300;
+        line-height: 1.4;
+    }
+}

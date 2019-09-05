@@ -1,0 +1,73 @@
+/*width of background block for devices*/
+$desktop-width:70rem;
+$tablet-width: 37rem;
+
+/*mixins for large and medium devices*/
+@mixin lg {
+    @media (min-width:1500px) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width:1200px) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (max-width:1199px) {
+        @content;
+    }
+}
+
+/*block bg*/
+.static-bg {
+
+    display:none;
+    position: fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    align-items: flex-end;
+    background-position:center;
+
+    @include md {
+
+        display: flex;
+        width: $tablet-width;
+
+    }
+
+    @include lg {
+
+        width:$desktop-width;
+
+    }
+}
+
+/*offsets for content*/
+.with-static-bg {
+
+    @include md {
+
+        margin-left:$tablet-width;
+
+    }
+
+    @include lg {
+
+        margin-left: $desktop-width;
+
+    }
+
+}
+
+/* mobile version of static bg */ 
+.static-bg-mobile {
+    @include sm {
+        position:relative;
+        height:100vh;
+        display:flex;
+    }
+}

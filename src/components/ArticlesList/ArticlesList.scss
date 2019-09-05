@@ -1,0 +1,94 @@
+.articles-list {
+
+    padding: 1.5rem 7.5rem 1.5rem 7.5rem;
+    position: relative;
+
+    article {
+
+        position:relative;
+
+        /* nice padding to border */
+        padding: 3.5rem 0;
+
+        /* border is only displayed between posts */
+        &:nth-child(n+2) {
+            border-top: 0.1rem solid rgba(0, 0, 0, 0.15);
+        }
+
+        /* article header */
+        h2 a {
+
+            color: #000;
+            font-weight: 600;
+
+            /* make it slightly graish upon hover */
+            &:hover {
+                opacity: 0.7;
+            }
+
+        }
+
+        /* short part of text */
+        .post-short {
+            font-weight: 300;
+        }
+
+        /* date and author */
+        .post-info {
+
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.3rem;
+            line-height: 1.42;
+            letter-spacing: -0.05rem;
+            color: rgba(0, 0, 0, 0.6);
+
+            /* making links look cool, as color from parent will not touch links */
+            a {
+                color: rgba(0, 0, 0, 0.6);
+            }
+
+
+            /* spliting post categories with padding and | */
+            .post-category {
+
+                padding: 0.3rem;
+
+                &:nth-child(n+2) {
+                    border-left:0.1rem solid rgba(0, 0, 0, 0.15);
+                }
+
+            }
+
+        }
+        
+    /* remove button */
+    .remove-button {
+        background:none;
+        border:none;
+        margin:0;
+        padding:0;
+        cursor: pointer;
+        display:none;
+        position:absolute;
+        right:0;
+        top:0;
+        font-size:2rem;
+    }
+
+    /* showing it only when we hover mouse over the article */
+    &:hover .remove-button {
+        display:block;
+    }
+
+    }
+}
+
+.float-left {
+    float:left;
+}
+
+.float-right {
+    float:right;
+}
