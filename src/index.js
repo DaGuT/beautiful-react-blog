@@ -10,7 +10,8 @@ import Sidemenu from './components/Sidemenu';
 import StaticBg from './components/StaticBg';
 
 //pages
-import Index from './routes/index.js';
+import Index from './routes/Index-route.js';
+import Article from './routes/Article/';
 
 //background image
 import niceBgImage from './assets/imgs/cityBg.jpg';
@@ -18,8 +19,9 @@ import niceBgImage from './assets/imgs/cityBg.jpg';
 
 ReactDOM.render(
 <BrowserRouter> 
-    <Route component={(props) => <Sidemenu {...props} links={config.sidemenuLinks} ignoredLinks={['/testLink']}/>} />
-    <Route component={(props) => <StaticBg {...props} bg={niceBgImage} text={config.staticBgText} ignoredLinks={['/testLink2']} />} /> {/* technically, you can spawn mulpiple StaticBg for different pages with different bg and texts, but in my case I will stay with 1 only atm */}
+    <Route component={(props) => <Sidemenu {...props} links={config.sidemenuLinks}/>} />
+    <Route component={(props) => <StaticBg {...props} bg={niceBgImage} text={config.staticBgText} ignoredLinks={[{path:'/article/',matchType:"part"}]} />} /> {/* technically, you can spawn mulpiple StaticBg for different pages with different bg and texts, but in my case I will stay with 1 only atm */}
+    <Route path="/article/:slug" component={(props) => <Article {...props} />} />
     <Route exact path="/" component={Index} />
 </BrowserRouter>
 , document.getElementById('root'));

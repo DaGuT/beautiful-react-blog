@@ -8,20 +8,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-/**
- * links - array of objects
- * {
- * to: string - link where it should link
- * desc: string - link subscription
- * name: string - link name
- * icon: string - glyphicon icon name (after dash)
- * }
- */
+import isLinkInIgnoredList from '../../utils/isLinkInIgnoredList';
 
-/*
- * Ignored links - array of string
- * each element is path where sidemenu should not be displayed
- */
 
 const Sidemenu = ({location, links, ignoredLinks}) => {
   //settings default ingoredLinks to be emtpy array
@@ -29,7 +17,7 @@ const Sidemenu = ({location, links, ignoredLinks}) => {
   ignoredLinks = ignoredLinks || [];
 
   //calculation if sidebar should be drawn
-  let isSidebarDrawn = (ignoredLinks.length === 0 || !ignoredLinks.some(link => (link === location.pathname)));
+  let isSidebarDrawn = !isLinkInIgnoredList(ignoredLinks,location);
 
   if (isSidebarDrawn) {
     document
@@ -105,7 +93,10 @@ Sidemenu.propTypes = {
     name: PropTypes.string.isRequired, //link name
     icon: PropTypes.string //glyphicon icon name (after dash)
   })),
-  ignoredLinks: PropTypes.arrayOf(PropTypes.string) //each element is path where sidemenu should not be displayed
+  ignoredLinks: PropTypes.arrayOf(PropTypes.shape({
+    path: PropTypes.string,//link path
+    matchType: PropTypes.oneOf(['exact','part']),
+  })), //each element is path where sidemenu should not be displayed
 }
 
 export default Sidemenu;

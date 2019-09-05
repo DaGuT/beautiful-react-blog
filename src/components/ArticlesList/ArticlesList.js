@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 import './ArticlesList.scss';
 
@@ -11,7 +12,7 @@ export default class ArticlesList extends Component {
             <i className="glyphicon glyphicon-remove"></i>
           </button>
           <h2>
-            <a href="#">Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</a>
+            <Link to="/article/123">Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</Link>
           </h2>
           <p className="post-short">{("Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor" +
                 "emque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis" +
