@@ -12,6 +12,7 @@ import StaticBg from './components/StaticBg';
 //pages
 import Index from './routes/Index-route.js';
 import Article from './routes/Article/';
+import CreateArticle from './routes/CreateArticle';
 
 //background image
 import niceBgImage from './assets/imgs/cityBg.jpg';
@@ -19,10 +20,11 @@ import niceBgImage from './assets/imgs/cityBg.jpg';
 
 ReactDOM.render(
 <BrowserRouter> 
-    <Route component={(props) => <Sidemenu {...props} links={config.sidemenuLinks}/>} />
-    <Route component={(props) => <StaticBg {...props} bg={niceBgImage} text={config.staticBgText} ignoredLinks={[{path:'/article/',matchType:"part"}]} />} /> {/* technically, you can spawn mulpiple StaticBg for different pages with different bg and texts, but in my case I will stay with 1 only atm */}
-    <Route path="/article/:slug" component={(props) => <Article {...props} />} />
-    <Route exact path="/" component={Index} />
+    <Route component={(props) => <Sidemenu {...props} links={config.sidemenuLinks}/>} /> {/* fancy sidemenu */}
+    <Route component={(props) => <StaticBg {...props} bg={niceBgImage} text={config.staticBgText} ignoredLinks={[{path:['/createArticle','/article/:slug']}]} />} /> {/* component to show "site info" on the left side*/}
+    <Route path={process.env.PUBLIC_URL +"/article/:slug"} component={(props) => <Article {...props} />} /> {/* single article page */}
+    <Route exact path={process.env.PUBLIC_URL +"/"} component={Index} /> {/* index page with articles list */}
+    <Route path={process.env.PUBLIC_URL +"/createarticle"} component={CreateArticle} />
 </BrowserRouter>
 , document.getElementById('root'));
 

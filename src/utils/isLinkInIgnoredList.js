@@ -1,27 +1,27 @@
 //this function checks if current location is in ignored list or not
 
-//It's written step-by step for easier understanding
+import { matchPath } from "react-router";
+import PropTypes from 'prop-types';
+
 
 function isLinkInIgnoredList(links, location) {
     //we check if we have any link. If we dont, link is surely not ignored
-    //then we check every link in links with matchType specified
+    //then we check every link
     return (links.length > 0 && links.some(link => {
 
-        console.log(link.path,location.pathname);
-        
-        if (link.matchType==="exact") {
-            return (link.path === location.pathname);
-        }
-
-        if (link.matchType==="part") {
-            //if we found substring in our current location, we return that we're in ignored link
-            return (location.pathname.indexOf(link.path)>=0);
-        }
-
-        //otherwise we return false (not ignored link)
-        return false;
+        return matchPath(location.pathname,link);
 
     }));
 }
 
+const ignoredListPropType = {
+    ignoredLinks: PropTypes.arrayOf(PropTypes.shape({
+        path: PropTypes.oneOfType([PropTypes.string,PropTypes.arrayOf(PropTypes.string)]).isRequired, //can be applied as with slug etc from router
+        exact: PropTypes.bool,//default - false
+        strict: PropTypes.bool//default - false
+      }))
+}
+
+
 export default isLinkInIgnoredList;
+export {ignoredListPropType};

@@ -7,6 +7,12 @@ const config = {
            icon: "home"
        },
        {
+           to: "/createarticle",
+           desc: "olala, come and post!",
+           name: "Create article",
+           icon: "pencil"
+       },
+       {
            to: "/testLink",
            desc: "test link 1",
            name: "Test1",

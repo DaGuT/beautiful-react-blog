@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './StaticBg.scss';
 
-import isLinkInIgnoredList from '../../utils/isLinkInIgnoredList';
+import isLinkInIgnoredList, {ignoredListPropType} from '../../utils/isLinkInIgnoredList';
 
 import Description from './Description';
 
@@ -56,10 +56,7 @@ const StaticBg = ({
 
 StaticBg.propTypes = {
   bg: PropTypes.string.isRequired,
-  ignoredLinks: PropTypes.arrayOf(PropTypes.shape({
-    path: PropTypes.string, //link path
-    matchType: PropTypes.oneOf(['exact', 'part'])
-  })), //each element is path where sidemenu should not be displayed
+  ...ignoredListPropType, //each element is path where staticbg should not be displayed
   text: PropTypes.shape({ //text to be displayed on that static bg
     bigText: PropTypes.string,
     smallText: PropTypes.string
