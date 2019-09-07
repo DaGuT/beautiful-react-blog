@@ -1,4 +1,4 @@
-##This is fancy react blog :)
+## This is fancy react blog :)
 I hope you enjoy visiting it. It's written with react+redux
 
 Demolink will be available later

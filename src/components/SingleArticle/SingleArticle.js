@@ -9,6 +9,7 @@ import ErrorBlock from '../ErrorBlock';
 import {connect} from 'react-redux';
 import {mapStateToProps, mapDispatchToProps} from './SingleArticle-redux';
 
+import Loading from '../Loading';
 
 class SingleArticle extends Component {
 
@@ -32,7 +33,8 @@ class SingleArticle extends Component {
             showOnMobile={true}/>
           <SingleArticleView data={data}/>
         </Fragment>
-}
+} 
+    {loading && <Loading />}
     {error && <ErrorBlock error="something went wrong"/>}
       </div>
     )

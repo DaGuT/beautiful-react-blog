@@ -2,6 +2,8 @@ import config from '../../config/config';
 
 import {error as showError} from '../../utils/notification.js';
 
+import axios from 'axios';
+
 //--------------- ACTIONS
 
 const GET_ARTICLES_LIST = "GET_ARTICLES_LIST";
@@ -21,18 +23,15 @@ const getArticlesList = (page=1) => async(dispatch, getState) => {
 
     //error handling
     try {
-      const response = await fetch(`${config.apiBaseUrl}/articles/?page=${page}`);
-      const data = await response.json();
-
-      if (data.status !== "success") throw(new Error(data.message));
+      const response = await axios.get(`${config.apiBaseUrl}/articles/?page=${page}`);
 
       //returning data to redux
-      dispatch({type: GET_ARTICLES_LIST, payload: data.data});
+      dispatch({type: GET_ARTICLES_LIST, payload: response.data.data});
   
       //saying it's loaded
       dispatch({type: GET_ARTICLES_LIST_LOADED});
     } catch (e) { // in case of error, we dispatch error
-      showError(e.message ? e.message : e);
+      showError(e.message);
       dispatch({type: GET_ARTICLES_LIST_ERROR, payload: e});
     }
 
@@ -47,13 +46,10 @@ const getArticlesListByCategory = (id, page=1) => async(dispatch,getState) => {
 
       //error handling
       try {
-        const response = await fetch(`${config.apiBaseUrl}/articles/category/${id}?page=${page}`);
-        const data = await response.json();
-
-        if (data.status !== "success") throw(new Error(data.message));
+        const data = await axios.get(`${config.apiBaseUrl}/articles/category/${id}?page=${page}`);
 
         //returning data to redux
-        dispatch({type: GET_ARTICLES_LIST, payload: data.data.articles}); //ahahahaha, data.data.data :D dat api is amazing!
+        dispatch({type: GET_ARTICLES_LIST, payload: data.data.data.articles}); //ahahahaha, data.data.data :D dat api is amazing!
     
         //saying it's loaded
         dispatch({type: GET_ARTICLES_LIST_LOADED});

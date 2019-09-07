@@ -6,6 +6,8 @@ import ErrorBlock from '../ErrorBlock';
 
 import ReactPaginate from 'react-paginate';
 
+import Loading from '../Loading';
+
 const ArticlesListView = ({loading: isLoading, error, articles: data, handleRemove, handlePageChange, page,pageCount}) => {
   const articles = data.data || [];
   return (
@@ -21,6 +23,7 @@ const ArticlesListView = ({loading: isLoading, error, articles: data, handleRemo
             />
         </div>
       </Fragment>}
+      {isLoading && <Loading />}
       {error && <ErrorBlock error="something went wrong"/>}
     </div>
   )

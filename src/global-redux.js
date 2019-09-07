@@ -16,6 +16,7 @@ import {reducer as formReducer} from 'redux-form'
 //ArticlesList reducer
 import {articlesReducer} from './components/ArticlesList/ArticlesList-redux';
 import {singleArticleReducer} from './components/SingleArticle/SingleArticle-redux';
+import {authReducer} from './components/LoginRegisterForm/LoginRegisterForm-redux';
 
 
 
@@ -29,7 +30,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({
   form: formReducer,
   articles: articlesReducer,
-  article: singleArticleReducer
+  article: singleArticleReducer,
+  auth: authReducer
 });
 
 //store creation
