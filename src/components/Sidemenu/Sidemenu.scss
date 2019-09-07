@@ -271,7 +271,7 @@ nav .collapsed-overlay {
 
     /*Allow main to be next to Nav*/
     .main {
-        margin-right: $desktop-width;
+        padding-right: $desktop-width;
     }
 
     nav.sidebar.navbar .menu-item-description {

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import './StaticBg.scss';
@@ -24,6 +24,12 @@ const StaticBg = ({
   // class with the same preparation, but different render as a prop. This way we
   // will solve that code repetition calculation if bg should be drawn
   let isBgDrawn = !isLinkInIgnoredList(ignoredLinks, location);
+
+  useEffect(() => {
+    if (!isBgDrawn) 
+      document.getElementById('root').classList.remove('with-static-bg');
+    }
+  );
 
   // same as sidebar, but different class if we draw that block, then we need to
   // add margin to main content or remove it, if we do not draw

@@ -1,16 +1,42 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 
 import StaticBg from '../StaticBg';
 import SingleArticleView from './SingleArticle-view';
 import './SingleArticle.scss';
 
-export default class SingleArticle extends Component {
-    render() {
-        return (
-            <div className="single-article">
-                <StaticBg {...this.props} bg="https://picsum.photos/600/1000" text={{bigText:"This is article"}} showOnMobile={true} />
-                <SingleArticleView />
-            </div>
-        )
-    }
+import ErrorBlock from '../ErrorBlock';
+
+import {connect} from 'react-redux';
+import {mapStateToProps, mapDispatchToProps} from './SingleArticle-redux';
+
+
+class SingleArticle extends Component {
+
+  componentDidMount() {
+    let {getSingleArticle, match} = this.props;
+    getSingleArticle(match.params.id);
+  }
+
+  render() {
+    let {loading, error, data} = this.props;
+    return (
+      <div className="single-article">
+
+        {!loading && !error && <Fragment>
+          <StaticBg
+            {...this.props}
+            bg="https://picsum.photos/600/1000"
+            text={{
+            bigText: data.data.title
+          }}
+            showOnMobile={true}/>
+          <SingleArticleView data={data}/>
+        </Fragment>
 }
+    {error && <ErrorBlock error="something went wrong"/>}
+      </div>
+    )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleArticle);

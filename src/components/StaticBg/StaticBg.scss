@@ -51,13 +51,13 @@ $tablet-width: 37rem;
 
     @include md {
 
-        margin-left:$tablet-width;
+        padding-left:$tablet-width;
 
     }
 
     @include lg {
 
-        margin-left: $desktop-width;
+        padding-left: $desktop-width;
 
     }
 

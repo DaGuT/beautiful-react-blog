@@ -14,20 +14,21 @@ const config = {
        },
        {
            to: "/testLink",
-           desc: "test link 1",
+           desc: "404 link",
            name: "Test1",
            icon: "heart"
        },
        {
-           to: "/testLink2",
-           name: "Test2",
+           to: "/login",
+           name: "Sign-in/Sign-up",
            icon: "heart"
        }
    ],
    staticBgText: { //I've made it to config because I want it to be sidewide and I want to have all configurations in 1 place. Like a template settings in wordpress
        bigText: "DaGuT Was Here",
        smallText: "This is absoluetly configurable text. You can make these chanegs in config.js or in Component props"
-   }
+   },
+   apiBaseUrl: "https://react-blog-api.bahdcasts.com/api"
 }
 
 export default config;

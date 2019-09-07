@@ -4,7 +4,7 @@ import 'bootstrap3/dist/js/bootstrap.min.js';
 
 import './Sidemenu.scss';
 
-import React,{Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -35,6 +35,12 @@ const Sidemenu = ({location, links, ignoredLinks}) => {
 
   //calculation if sidebar should be drawn
   let isSidebarDrawn = !isLinkInIgnoredList(ignoredLinks, location);
+
+  useEffect(() => {
+    if (!isSidebarDrawn) 
+      document.getElementById('root').classList.remove('main');
+    }
+  );
 
   if (isSidebarDrawn) {
     document
@@ -73,7 +79,8 @@ const Sidemenu = ({location, links, ignoredLinks}) => {
           </p>
         </div>
       </nav>
-    } </Fragment>
+    } 
+    </Fragment>
   );
 }
 
