@@ -17,6 +17,9 @@ class ArticlesList extends Component {
     this.handlePageChange = this
       .handlePageChange
       .bind(this);
+    this.handleEdit = this
+      .handleEdit
+      .bind(this);
   }
 
   getArticles() {
@@ -49,6 +52,13 @@ class ArticlesList extends Component {
       .deleteArticle(el.target.getAttribute('postid'));
   }
 
+  handleEdit(el) {
+    this
+    .props
+    .history
+    .push(`${process.env.PUBLIC_URL}/editarticle/${el.target.getAttribute('postid')}`);
+  }
+
   handlePageChange({selected: page}) {
     page++;
     if (page===+this.props.match.params.page || (this.props.match.params.page===undefined && page===1)) return;
@@ -74,6 +84,7 @@ class ArticlesList extends Component {
       {...this.props}
       handleRemove={this.handleRemove}
       handlePageChange={this.handlePageChange}
+      handleEdit={this.handleEdit}
       page={this.props.match.params.page || 1}
       pageCount={this.countPages()}/>)
   }

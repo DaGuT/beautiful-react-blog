@@ -15,59 +15,59 @@ const DELETE_ARTICLE_LOADING = "DELETE_ARTICLE_LOADING";
 const DELETE_ARTICLE_LOADED = "DELETE_ARTICLE_LOADED";
 const DELETE_ARTICLE_ERROR = "DELETE_ARTICLE_ERROR";
 
+const getArticlesList = (page = 1) => async(dispatch, getState) => {
 
-const getArticlesList = (page=1) => async(dispatch, getState) => {
+  //saying we're loading
+  dispatch({type: GET_ARTICLES_LIST_LOADING});
 
-    //saying we're loading
-    dispatch({type: GET_ARTICLES_LIST_LOADING});
+  //error handling
+  try {
+    const response = await axios.get(`${config.apiBaseUrl}/articles/?page=${page}`);
 
-    //error handling
-    try {
-      const response = await axios.get(`${config.apiBaseUrl}/articles/?page=${page}`);
+    //returning data to redux
+    dispatch({type: GET_ARTICLES_LIST, payload: response.data.data});
 
-      //returning data to redux
-      dispatch({type: GET_ARTICLES_LIST, payload: response.data.data});
-  
-      //saying it's loaded
-      dispatch({type: GET_ARTICLES_LIST_LOADED});
-    } catch (e) { // in case of error, we dispatch error
-      showError(e.message);
-      dispatch({type: GET_ARTICLES_LIST_ERROR, payload: e});
-    }
+    //saying it's loaded
+    dispatch({type: GET_ARTICLES_LIST_LOADED});
+  } catch (e) { // in case of error, we dispatch error
+    showError(e.message);
+    dispatch({type: GET_ARTICLES_LIST_ERROR, payload: e});
+  }
 
 }
 
-const getArticlesListByCategory = (id, page=1) => async(dispatch,getState) => {
+const getArticlesListByCategory = (id, page = 1) => async(dispatch, getState) => {
 
-      //core repetition, but payload is different
+  //core repetition, but payload is different saying we're loading
+  dispatch({type: GET_ARTICLES_LIST_LOADING});
 
-      //saying we're loading
-      dispatch({type: GET_ARTICLES_LIST_LOADING});
+  //error handling
+  try {
+    const data = await axios.get(`${config.apiBaseUrl}/articles/category/${id}?page=${page}`);
 
-      //error handling
-      try {
-        const data = await axios.get(`${config.apiBaseUrl}/articles/category/${id}?page=${page}`);
+    //returning data to redux
+    dispatch({type: GET_ARTICLES_LIST, payload: data.data.data.articles}); //ahahahaha, data.data.data :D dat api is amazing!
 
-        //returning data to redux
-        dispatch({type: GET_ARTICLES_LIST, payload: data.data.data.articles}); //ahahahaha, data.data.data :D dat api is amazing!
-    
-        //saying it's loaded
-        dispatch({type: GET_ARTICLES_LIST_LOADED});
-      } catch (e) { // in case of error, we dispatch error
-        showError(e.message ? e.message : e);
-        dispatch({type: GET_ARTICLES_LIST_ERROR, payload: e});
-      }
-  
+    //saying it's loaded
+    dispatch({type: GET_ARTICLES_LIST_LOADED});
+  } catch (e) { // in case of error, we dispatch error
+    showError(e.message
+      ? e.message
+      : e);
+    dispatch({type: GET_ARTICLES_LIST_ERROR, payload: e});
+  }
+
 }
 
 const deleteArticle = (id) => async(dispatch, getState) => {
   try {
-    let token = localStorage.getItem('user');
+    let token = JSON
+      .parse(localStorage.getItem('user'))
+      .token;
 
     dispatch({type: DELETE_ARTICLE_LOADING});
 
-    await fetch(`${config.apiBaseUrl}/articles/${id}`, {
-      method: 'DELETE',
+    await axios.delete(`${config.apiBaseUrl}/articles/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -77,14 +77,15 @@ const deleteArticle = (id) => async(dispatch, getState) => {
     dispatch({type: DELETE_ARTICLE_LOADED});
 
   } catch (e) {
-    dispatch({type: DELETE_ARTICLE_ERROR, payload: e});
+    showError(e.response.data.message);
+    dispatch({type: DELETE_ARTICLE_ERROR, payload: e.response? e.repsponse : e});
   }
 }
 
 //--------------- REDUCER
 
 export const articlesReducer = (state = {
-  data: [],
+  data: []
 }, action) => {
   switch (action.type) {
     case GET_ARTICLES_LIST:
@@ -142,7 +143,7 @@ export const mapDispatchToProps = dispatch => ({
   deleteArticle: (id) => {
     dispatch(deleteArticle(id))
   },
-  getArticlesListByCategory: (id,page) => {
-    dispatch(getArticlesListByCategory(id,page))
+  getArticlesListByCategory: (id, page) => {
+    dispatch(getArticlesListByCategory(id, page))
   }
 });

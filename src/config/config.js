@@ -21,8 +21,14 @@ const config = {
        {
            to: "/login",
            name: "Sign-in/Sign-up",
-           icon: "heart"
+           icon: "user"
+       },
+       {
+           to: "/logout",
+           name: "Logout",
+           icon: "fire"
        }
+
    ],
    staticBgText: { //I've made it to config because I want it to be sidewide and I want to have all configurations in 1 place. Like a template settings in wordpress
        bigText: "DaGuT Was Here",

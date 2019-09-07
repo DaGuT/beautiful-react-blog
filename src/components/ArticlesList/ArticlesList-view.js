@@ -8,11 +8,11 @@ import ReactPaginate from 'react-paginate';
 
 import Loading from '../Loading';
 
-const ArticlesListView = ({loading: isLoading, error, articles: data, handleRemove, handlePageChange, page,pageCount}) => {
+const ArticlesListView = ({loading: isLoading, error, articles: data, handleRemove, handlePageChange, page,pageCount, handleEdit}) => {
   const articles = data.data || [];
   return (
     <div className="articles-list">
-      {!isLoading && !error && <Fragment>{articles.map(article => <Article handleRemove={handleRemove} key={article.id} article={article}/>)}
+      {!isLoading && !error && <Fragment>{articles.map(article => <Article userID={article.user.id} handleEdit={handleEdit} handleRemove={handleRemove} key={article.id} article={article}/>)}
         <div className="text-center my-5">
           <ReactPaginate
             containerClassName="pagination"

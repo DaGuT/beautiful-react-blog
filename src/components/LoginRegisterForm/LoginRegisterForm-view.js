@@ -1,6 +1,12 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
+
+
+import {success} from '../../utils/notification.js';
 
 const LoginRegisterFormView = (props) => {
+  const isAuth = JSON.parse(localStorage.getItem('user'));
+  if (isAuth) success("Authorised!");
   return (
     <div className="login-register">
       <div className="form">
@@ -103,6 +109,8 @@ const LoginRegisterFormView = (props) => {
         </div>{/* tab-content */}
       </div>
       {/* /form */}
+
+      {isAuth && <Redirect to={process.env.PUBLIC_URL+"/"} />}
     </div>
   )
 }

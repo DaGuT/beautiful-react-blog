@@ -21,12 +21,12 @@ function stripHtml(html)
 }
 
 //and fnially, component
-const Article = ({article, handleRemove}) => {
+const Article = ({article, handleRemove, userID}) => {
   //just a content variable. It is here so that I can strip html only once and then print, slice and get its length easily
   let content = stripHtml((article.content));
   return(
   <article id={`post-${article.id}`}>
-    <RemoveButton handleRemove={handleRemove} postid={article.id} />
+    { userID===JSON.parse(localStorage.getItem('user')).user.id && <RemoveButton handleRemove={handleRemove} postid={article.id} />}
     <h2>
       <Link to={`${process.env.PUBLIC_URL}/article/${article.id}`}>{article.title}</Link>
     </h2>

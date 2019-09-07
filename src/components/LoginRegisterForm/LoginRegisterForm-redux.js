@@ -4,6 +4,8 @@ import {error as showError} from '../../utils/notification.js';
 
 import axios from 'axios';
 
+import formatErrors from '../../utils/formatErrors.js';
+
 //--------------- ACTIONS
 
 const LOGIN = "LOGIN";
@@ -15,24 +17,6 @@ const REGISTER = "REGISTER";
 const REGISTER_ERROR = "REGISTER_ERROR";
 const REGISTER_LOADING = "REGISTER_LOADING";
 const REGISTER_LOADED = "REGISTER_LOADED";
-
-function formatErrors(e) {
-  const errors = {};
-
-  if (e.response && e.response.status === 422) {
-
-    for (let error in e.response.data) {
-      errors[error] = e.response.data[error][0];
-    }
-
-  }
-
-  if (e.response && e.response.status===401) {
-    errors['invalid'] = "Invalid credentials";
-  }
-
-  return errors;
-}
 
 const login = (email, password) => async(dispatch, getState) => {
   let data;

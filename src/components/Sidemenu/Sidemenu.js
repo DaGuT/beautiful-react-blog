@@ -75,7 +75,7 @@ const Sidemenu = ({location, links, ignoredLinks}) => {
         </div>
         <div className="navbar-footer">
           <p>
-            <Link to="https://dagut.ru" target="_blank">©DaGuT 2019</Link>
+            <a href="https://dagut.ru" target="_blank">©DaGuT 2019</a>
           </p>
         </div>
       </nav>
