@@ -1,29 +1,28 @@
 import config from '../../config/config';
 
+
 import {error as showError} from '../../utils/notification.js';
+import axios from 'axios';
 
 //----------------ACTIONS
 
-const GET_SINGLE_ARTICLE = "GET_SINGLE_ARTICLE";
-const GET_SINGLE_ARTICLE_LOADING = "GET_SINGLE_ARTICLE_LOADING";
-const GET_SINGLE_ARTICLE_LOADED = "GET_SINGLE_ARTICLE_LOADED";
-const GET_SINGLE_ARTICLE_ERROR = "GET_SINGLE_ARTICLE_ERROR";
+export const GET_SINGLE_ARTICLE = "GET_SINGLE_ARTICLE";
+export const GET_SINGLE_ARTICLE_LOADING = "GET_SINGLE_ARTICLE_LOADING";
+export const GET_SINGLE_ARTICLE_LOADED = "GET_SINGLE_ARTICLE_LOADED";
+export const GET_SINGLE_ARTICLE_ERROR = "GET_SINGLE_ARTICLE_ERROR";
 
-const getSingleArticle = (id) => async(dispatch) => {
+export const getSingleArticle = (id) => async(dispatch) => {
   try {
     dispatch({type: GET_SINGLE_ARTICLE_LOADING});
 
-    const response = await fetch(`${config.apiBaseUrl}/article/${id}`);
-    const data = await response.json();
+    const data = await axios.get(`${config.apiBaseUrl}/article/${id}`);
 
-    if (data.status !== "success") throw(new Error(data.message));
-
-    dispatch({type: GET_SINGLE_ARTICLE, payload: data});
+    dispatch({type: GET_SINGLE_ARTICLE, payload: data.data});
 
     dispatch({type: GET_SINGLE_ARTICLE_LOADED})
   } catch (e) {
-    showError(e.message ? e.message : e);
-    dispatch({type: GET_SINGLE_ARTICLE_ERROR, payload: e.message})
+    showError(e.response ? e.response.message : e.message);
+    dispatch({type: GET_SINGLE_ARTICLE_ERROR, payload: true})
   }
 }
 

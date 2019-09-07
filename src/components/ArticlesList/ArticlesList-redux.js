@@ -36,6 +36,35 @@ const getArticlesList = (page = 1) => async(dispatch, getState) => {
 
 }
 
+const getMyArticlesList = (page = 1) => async(dispatch, getState) => {
+
+  //saying we're loading
+  dispatch({type: GET_ARTICLES_LIST_LOADING});
+
+  const token = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).token;
+
+  //error handling
+  try {
+    const response = await axios.get(`${config.apiBaseUrl}/user/articles`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    //returning data to redux
+    dispatch({type: GET_ARTICLES_LIST, payload: response.data.data});
+
+    //saying it's loaded
+    dispatch({type: GET_ARTICLES_LIST_LOADED});
+  } catch (e) { // in case of error, we dispatch error
+    showError(e.message);
+    dispatch({type: GET_ARTICLES_LIST_ERROR, payload: e});
+  }
+
+}
+
+
+
 const getArticlesListByCategory = (id, page = 1) => async(dispatch, getState) => {
 
   //core repetition, but payload is different saying we're loading
@@ -61,7 +90,7 @@ const getArticlesListByCategory = (id, page = 1) => async(dispatch, getState) =>
 
 const deleteArticle = (id) => async(dispatch, getState) => {
   try {
-    let token = JSON
+    let token = localStorage.getItem('user') && JSON
       .parse(localStorage.getItem('user'))
       .token;
 
@@ -139,6 +168,9 @@ export const mapStateToProps = state => ({articles: state.articles.data, loading
 export const mapDispatchToProps = dispatch => ({
   getArticlesList: (page) => {
     dispatch(getArticlesList(page))
+  },
+  getMyArticlesList: (page) => {
+    dispatch(getMyArticlesList(page))
   },
   deleteArticle: (id) => {
     dispatch(deleteArticle(id))

@@ -24,6 +24,12 @@ const config = {
            icon: "user"
        },
        {
+           to: "/myarticles",
+           name: "My articles",
+           desc: "Go to list of my articles",
+           icon: "user"
+       },
+       {
            to: "/logout",
            name: "Logout",
            icon: "fire"

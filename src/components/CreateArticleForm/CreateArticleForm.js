@@ -8,7 +8,7 @@ import {mapStateToProps, mapDispatchToProps} from './CreateArticleForm-redux';
 import draftToHtml from 'draftjs-to-html';
 import {convertToRaw} from 'draft-js';
 
-import {error as showError, success} from '../../utils/notification.js';
+import {error as showError} from '../../utils/notification.js';
 
 class CreateArticleForm extends Component {
 
@@ -24,12 +24,33 @@ class CreateArticleForm extends Component {
     this.handleEditorState = this
       .handleEditorState
       .bind(this);
+    this.updateArticle = this
+      .updateArticle
+      .bind(this);
   }
 
   componentDidMount() {
     this
       .props
       .getArticleCategories();
+
+    if (this.props.editArticleID) {
+      this.props.getSingleArticle(this.props.editArticleID);
+    } else {
+      this.props.dropState();
+    }
+  }
+
+  updateArticle(event) {
+
+    event.preventDefault();
+
+    this.props.updateArticle({
+      title: this.props.title,
+      content: draftToHtml(convertToRaw(this.props.content.getCurrentContent())),
+      category: this.props.category,
+      image: this.props.image
+    },this.props.editArticleID);
   }
 
   handleInputChange(event) {
@@ -62,6 +83,7 @@ class CreateArticleForm extends Component {
       {...this.props}
       handleInputChange={this.handleInputChange}
       handleSubmit={this.handleSubmit}
+      updateArticle={this.updateArticle}
       handleEditorState={this.handleEditorState}
       content={this.props.content}/>)
   }

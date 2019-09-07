@@ -63,8 +63,8 @@
 
         }
         
-    /* remove button */
-    .remove-button {
+    /* remove/edit button */
+    .my-action-button {
         background:none;
         border:none;
         margin:0;
@@ -77,8 +77,13 @@
         font-size:2rem;
     }
 
+    .edit-button {
+        right:3rem;
+    }
+
+
     /* showing it only when we hover mouse over the article */
-    &:hover .remove-button {
+    &:hover .my-action-button {
         display:block;
     }
 

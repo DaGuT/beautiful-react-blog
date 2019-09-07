@@ -28,6 +28,9 @@ class ArticlesList extends Component {
       this
         .props
         .getArticlesListByCategory(this.props.category, this.props.match.params.page);
+    } else if (this.props.myArticles) {
+      console.log(this.props.match);
+      this.props.getMyArticlesList(this.props.match.params.page);
     } else {
       this
         .props
@@ -41,7 +44,8 @@ class ArticlesList extends Component {
 
   //we check if we have change page, and if yes, we get new articles
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.page===this.props.match.params.page) return;
+    if (prevProps.match.params.page === this.props.match.params.page) 
+      return;
     this.getArticles();
   }
 
@@ -54,14 +58,15 @@ class ArticlesList extends Component {
 
   handleEdit(el) {
     this
-    .props
-    .history
-    .push(`${process.env.PUBLIC_URL}/editarticle/${el.target.getAttribute('postid')}`);
+      .props
+      .history
+      .push(`${process.env.PUBLIC_URL}/editarticle/${el.target.getAttribute('postid')}`);
   }
 
   handlePageChange({selected: page}) {
     page++;
-    if (page===+this.props.match.params.page || (this.props.match.params.page===undefined && page===1)) return;
+    if (page ===+ this.props.match.params.page || (this.props.match.params.page === undefined && page === 1)) 
+      return;
     if (this.props.category) {
       this
         .props
@@ -72,7 +77,7 @@ class ArticlesList extends Component {
         .props
         .history
         .push(`${process.env.PUBLIC_URL}/articles/page=${page}`)
-    } 
+    }
   }
 
   countPages() {

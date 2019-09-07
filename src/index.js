@@ -18,6 +18,8 @@ import Index from './routes/Index-route.js';
 import Category from './routes/Articles/Category';
 import Article from './routes/Article/';
 import CreateArticle from './routes/CreateArticle';
+import EditArticle from './routes/EditArticle';
+import MyArticles from './routes/MyArticles';
 
 //background image
 import niceBgImage from './assets/imgs/cityBg.jpg';
@@ -40,7 +42,7 @@ ReactDOM.render(
       bg={niceBgImage}
       text={config.staticBgText}
       ignoredLinks={[{
-        path: [process.env.PUBLIC_URL +'/createArticle', process.env.PUBLIC_URL +'/article/:id', process.env.PUBLIC_URL +'/register', process.env.PUBLIC_URL +'/login']
+        path: [process.env.PUBLIC_URL +'/createArticle', process.env.PUBLIC_URL +'/article/:id', process.env.PUBLIC_URL +'/register', process.env.PUBLIC_URL +'/login',process.env.PUBLIC_URL + "/editarticle/:id"]
       }
     ]}/>}/> {/* component to show "site info" on the left side*/}
 
@@ -74,9 +76,16 @@ ReactDOM.render(
         process.env.PUBLIC_URL + "/articles/category/:id/page=:page"
       ]}
         component={Category}/> {/* index page with articles list */}
+      
       <Route
-        path={process.env.PUBLIC_URL + "/createarticle"}
+        exact path={[process.env.PUBLIC_URL + "/createarticle"]}
         component={CreateArticle}/>
+      <Route
+        exact path={[process.env.PUBLIC_URL + "/editarticle/:id"]}
+        component={EditArticle}/>
+
+      <Route exact path={process.env.PUBLIC_URL + '/myarticles'} component={MyArticles}/>
+
       <Route component={(props) => <ErrorBlock error="404"/>}/>
     </Switch>
   </BrowserRouter>

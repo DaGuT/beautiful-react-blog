@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+import {Redirect} from "react-router-dom";
+
 import Loading from '../Loading';
 
 const CreateArticleFormView = ({
@@ -12,17 +14,18 @@ const CreateArticleFormView = ({
   categories,
   handleSubmit,
   updateArticle,
-  editing ,
+  editing,
   category,
   content,
   handleEditorState,
-  loading
+  loading,
+  redirect
 }) => {
   return (
     <div >
       <main className="main-content">
         <section className="section">
-          <div className="container">
+          <div className="container my-container-fix">
             <div className="row">
               <div className="col-12 col-lg-12">
                 <ul className="list-group">
@@ -72,7 +75,7 @@ const CreateArticleFormView = ({
                     <button className="btn btn-lg btn-primary" type="submit">{editing
                         ? 'Update Article'
                         : 'Create Article'}</button>
-                        {loading && <Loading />}
+                    {loading && <Loading/>}
                   </div>
                 </form>
               </div>
@@ -80,6 +83,7 @@ const CreateArticleFormView = ({
           </div>
         </section>
       </main>
+      {/* redirect if we're trying to edit other's article */redirect && <Redirect to={process.env.PUBLIC_URL + '/createarticle'}/>}
     </div>
   );
 }
