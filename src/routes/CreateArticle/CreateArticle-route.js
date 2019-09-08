@@ -6,7 +6,7 @@ export default class CreateArticle extends Component {
     render() {
         return (
             <div>
-                <CreateArticleForm />
+                <CreateArticleForm {...this.props} />
             </div>
         )
     }

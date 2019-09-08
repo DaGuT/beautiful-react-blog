@@ -43,7 +43,7 @@ const linksPropType = PropTypes.arrayOf(PropTypes.shape({
   desc: PropTypes.string, //link subscription
   name: PropTypes.string.isRequired, //link name
   icon: PropTypes.string, //glyphicon icon name (after dash)
-  hideFor: PropTypes.arrayOf(['authUser','notAuthUser'])
+  hideFor: PropTypes.oneOf(['authUser','notAuthUser'])
 }));
 
 LinkList.propTypes = {

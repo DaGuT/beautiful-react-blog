@@ -1,4 +1,6 @@
 const config = {
+  //stire name, will be used to change page title
+  siteName: "Beautiful DaGuT Blog",
   //link for sidemenu.
   //Some of them will be shown depending on condition (user logged in our out)
   sidemenuLinks: [

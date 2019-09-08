@@ -1,12 +1,15 @@
 import React from 'react'
 import {Redirect} from 'react-router-dom'
-
+import PropTypes, {string} from 'prop-types'
 
 import {success} from '../../utils/notification.js';
 
+// I could have splitted tables into two, but this option is better as everything
+// is in the same place.
 const LoginRegisterFormView = (props) => {
   const isAuth = JSON.parse(localStorage.getItem('user'));
-  if (isAuth) success("Authorised!");
+  if (isAuth) 
+    success("Authorised!");
   return (
     <div className="login-register">
       <div className="form">
@@ -33,7 +36,7 @@ const LoginRegisterFormView = (props) => {
                   <input id="first-name-register" type="text" required autoComplete="off"/>
                 </div>
                 <div className="field-wrap">
-                {props.reg_errors.name && <div style={{
+                  {props.reg_errors.name && <div style={{
                     color: "white"
                   }}>&nbsp;</div>}
                   <label>
@@ -110,9 +113,18 @@ const LoginRegisterFormView = (props) => {
       </div>
       {/* /form */}
 
-      {isAuth && <Redirect to={process.env.PUBLIC_URL+"/"} />}
+      {isAuth && <Redirect to={process.env.PUBLIC_URL + "/"}/>}
     </div>
   )
+}
+
+LoginRegisterFormView.propTypes = {
+  handleLogin: PropTypes.func.isRequired, //what to do when user tries to login (in my case it's handler that dispatches redux action)
+  handleRegister: PropTypes.func.isRequired, //same for register,
+  errors: PropTypes.oneOfType([PropTypes.shape({
+    errors: PropTypes.shape({email: PropTypes.string, password: PropTypes.string, invalid: PropTypes.string}),
+    reg_errors: PropTypes.shape({email: PropTypes.string, password: PropTypes.string, name: PropTypes.string})
+  }), PropTypes.string])
 }
 
 export default LoginRegisterFormView;

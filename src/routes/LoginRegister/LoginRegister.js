@@ -6,7 +6,7 @@ export default class LoginRegister extends Component {
     render() {
         return (
             <div>
-                <LoginRegisterForm />
+                <LoginRegisterForm {...this.props} />
             </div>
         )
     }

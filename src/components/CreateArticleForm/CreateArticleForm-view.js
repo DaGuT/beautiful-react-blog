@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
+
 
 import {Editor} from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -87,5 +89,25 @@ const CreateArticleFormView = ({
     </div>
   );
 }
+
+CreateArticleFormView.propTypes  = {
+  handleInputChange: PropTypes.func.isRequired,
+  categories: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.shape({
+    message: PropTypes.string.isRequired,
+  })).isRequired,
+  editing: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.objectOf(PropTypes.any).isRequired,
+  category: PropTypes.number,
+  updateArticle: PropTypes.func.isRequired,
+  redirect: PropTypes.bool,
+  loading: PropTypes.bool,
+  handleEditorState: PropTypes.func
+};
 
 export default CreateArticleFormView;

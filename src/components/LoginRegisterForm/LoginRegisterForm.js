@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import {connect} from "react-redux";
 
+import config from '../../config/config.js';
+
 import LoginRegisterFormView from './LoginRegisterForm-view'
 import './LoginRegisterForm.scss'
 import {mapStateToProps, mapDispatchToProps} from './LoginRegisterForm-redux';
@@ -22,28 +24,37 @@ class LoginRegisterForm extends Component {
   }
 
   handleRegister(e) {
+    //prevenging browser default form sumission
     e.preventDefault();
 
+    //grabbing user data
     const email = document.getElementById('email-register').value;
     const firstName = document.getElementById('first-name-register').value;
     const lastName = document.getElementById('last-name-register').value;
     const password = document.getElementById('password-register').value;
 
+    //trying to register
     this.props.register(email,password,firstName+' '+lastName);
 }
 
 handleLogin(e) {
+  //upon login submit, we want to do our own things
     e.preventDefault();
     
+    //we grab user dada
     const email = document.getElementById('email-login').value;
     const password = document.getElementById('password-login').value;
 
+    //and we send login request and store result in localStorage
     this.props.login(email,password);
   }
 
   componentDidMount() {
 
-    //form graphic
+    //chaning title to be appropriate to login
+    document.title = config.siteName + '- Login or Register';
+
+    //form graphic used to make switches and highlight for fields
     $('.form')
       .find('input, textarea')
       .on('keyup blur focus', function (e) {
@@ -95,6 +106,11 @@ handleLogin(e) {
       $(target).fadeIn(600);
 
     });
+  }
+
+  //changing title back
+  componentWillUnmount() {
+    document.title = config.siteName;
   }
 
   render() {

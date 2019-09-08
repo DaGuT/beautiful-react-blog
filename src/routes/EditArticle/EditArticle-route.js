@@ -6,7 +6,7 @@ export default class CreateArticle extends Component {
     render() {
         return (
             <div>
-                <CreateArticleForm editArticleID={this.props.match.params.id} />
+                <CreateArticleForm {...this.props} editArticleID={this.props.match.params.id} />
             </div>
         )
     }
