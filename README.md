@@ -25,5 +25,12 @@ REST API Limitations that did not allow me to fully customize this blog:
 TODO:
 - add prop types (did not have time to add them, so there are almost none of them)
 - Change styles of create/edit articles
-- Document/comment code. As I was in real rush, I did not have a chance to comment anything. However I tried to structure it to be undertandable. Though prettier smashed my beauty and now it looks scary :D
+- Document/comment code. As I was in real rush, I did not have a chance to comment anything. However I tried to structure it to be understandable. Though prettier smashed my beauty and now it looks scary :D
 - Add posibility to load existing post image while editing post
+
+_____
+
+If you want to run it locally:
+- Clone repo
+- Run "npm install" to install all dependancies
+- Run "npm start" and it will start in dev mode. All functionallity will be working
