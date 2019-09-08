@@ -42,6 +42,12 @@ const CHANGE_INPUT = "CHANGE_INPUT";
 const DROP_STATE = "DROP_STATE";
 const DROP_EDITING_STATE = "DROP_EDITING_STATE";//it's easeir to have just 1, than universal, as I need only 1
 
+const GET_ARTICLE = "GET_ARTICLE";
+const GET_ARTICLE_LOADING = "GET_ARTICLE_LOADING";
+const GET_ARTICLE_LOADED = "GET_SARTICLE_LOADED";
+const GET_ARTICLE_ERROR = "GET_ARTICLE_ERROR";
+
+
 const uploadToCloudinary = async(image) => {
   const form = new FormData();
   form.append('file', image);
@@ -130,6 +136,21 @@ const createArticle = (data, postID, type = "create") => async(dispatch, getStat
   }
 }
 
+export const getArticle = (id) => async(dispatch) => {
+  try {
+    dispatch({type: GET_ARTICLE_LOADING});
+
+    const data = await axios.get(`${config.apiBaseUrl}/article/${id}`);
+
+    dispatch({type: GET_ARTICLE, payload: data.data});
+
+    dispatch({type: GET_ARTICLE_LOADED})
+  } catch (e) {
+    showError(e.response ? e.response.message : e.message);
+    dispatch({type: GET_ARTICLE_ERROR, payload: true})
+  }
+}
+
 const dropState = () => async(dispatch, getState) => {
 
   dispatch({type: DROP_STATE});
@@ -211,8 +232,7 @@ export const newArticleReducer = (state = {
         errors: action.payload,
         loading: false
       }
-    case GET_SINGLE_ARTICLE:
-
+    case GET_ARTICLE:
       // we should not let give false hopes when editing some1 else's news, so we
       // prevent loading such news
       if (action.payload.data.user_id !== (localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).user.id)) {
@@ -236,18 +256,18 @@ export const newArticleReducer = (state = {
           editing: true
         }
       }
-    case GET_SINGLE_ARTICLE_LOADING:
+    case GET_ARTICLE_LOADING:
       return {
         ...state,
         loading: true
       }
-    case GET_SINGLE_ARTICLE_LOADED:
+    case GET_ARTICLE_LOADED:
       return {
         ...state,
         loading: false,
         error: false
       }
-    case GET_SINGLE_ARTICLE_ERROR:
+    case GET_ARTICLE_ERROR:
       return {
         ...state,
         loading: false,
@@ -299,8 +319,8 @@ export const mapDispatchToProps = dispatch => ({
   changeInput: (event) => {
     dispatch(changeInput(event));
   },
-  getSingleArticle: (id) => {
-    dispatch(getSingleArticle(id));
+  getArticle: (id) => {
+    dispatch(getArticle(id));
   },
   dropState: () => {
     dispatch(dropState());

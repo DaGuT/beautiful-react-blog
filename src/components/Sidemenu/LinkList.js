@@ -9,6 +9,7 @@ const LinkListView = ({links, location}) => (
       if (link.to===`/login` && localStorage.getItem('user')) return;
       if (link.to===`/logout` && !localStorage.getItem('user')) return;
       if (link.to===`/myarticles` && !localStorage.getItem('user')) return;
+      if (link.to===`/createarticle` && !localStorage.getItem('user')) return;
 
       return <li
         key={i}
