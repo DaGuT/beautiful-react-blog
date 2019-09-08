@@ -35,7 +35,7 @@ class CreateArticleForm extends Component {
       .getArticleCategories();
 
     if (this.props.editArticleID) {
-      this.props.getSingleArticle(this.props.editArticleID);
+      this.props.getArticle(this.props.editArticleID);
     } else {
       this.props.dropState();
     }
