@@ -29,8 +29,9 @@ class ArticlesList extends Component {
         .props
         .getArticlesListByCategory(this.props.category, this.props.match.params.page);
     } else if (this.props.myArticles) {
-      console.log(this.props.match);
-      this.props.getMyArticlesList(this.props.match.params.page);
+      this
+        .props
+        .getMyArticlesList(this.props.match.params.page);
     } else {
       this
         .props
@@ -44,9 +45,10 @@ class ArticlesList extends Component {
 
   //we check if we have change page, and if yes, we get new articles
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.page === this.props.match.params.page) 
+    if (!this.props.removed && (prevProps.match.params.page === this.props.match.params.page)) 
       return;
     this.getArticles();
+    this.props.resetRemoved();
   }
 
   //function to delete post

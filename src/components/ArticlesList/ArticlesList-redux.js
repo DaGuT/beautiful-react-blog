@@ -1,6 +1,6 @@
 import config from '../../config/config';
 
-import {error as showError} from '../../utils/notification.js';
+import {error as showError, success} from '../../utils/notification.js';
 
 import axios from 'axios';
 
@@ -14,6 +14,9 @@ const GET_ARTICLES_LIST_ERROR = "GET_ARTICLES_LIST_ERROR";
 const DELETE_ARTICLE_LOADING = "DELETE_ARTICLE_LOADING";
 const DELETE_ARTICLE_LOADED = "DELETE_ARTICLE_LOADED";
 const DELETE_ARTICLE_ERROR = "DELETE_ARTICLE_ERROR";
+
+//used only for updating after post removal
+const RESET_REMOVED = "RESET_REMOVED";
 
 const getArticlesList = (page = 1) => async(dispatch, getState) => {
 
@@ -104,13 +107,16 @@ const deleteArticle = (id) => async(dispatch, getState) => {
 
     //we update article list
     dispatch({type: DELETE_ARTICLE_LOADED});
-
+    success("Article was removed!");
   } catch (e) {
     showError(e.response.data.message);
     dispatch({type: DELETE_ARTICLE_ERROR, payload: e.response? e.repsponse : e});
   }
 }
 
+const resetRemoved = () => async(dispatch, getState) => {
+  dispatch({type:RESET_REMOVED});
+}
 //--------------- REDUCER
 
 export const articlesReducer = (state = {
@@ -148,7 +154,8 @@ export const articlesReducer = (state = {
       return {
         ...state,
         delete_loading: false,
-        delete_error: false
+        delete_error: false,
+        removed:true
       }
     case DELETE_ARTICLE_ERROR:
       return {
@@ -156,6 +163,11 @@ export const articlesReducer = (state = {
         delete_error: false,
         delete_loading: false
       }
+      case RESET_REMOVED:
+        return {
+          ...state,
+          removed:false
+        }
     default:
       return state;
   }
@@ -163,7 +175,7 @@ export const articlesReducer = (state = {
 
 //--------------- mapStateToProps and mapDispatchToProps
 
-export const mapStateToProps = state => ({articles: state.articles.data, loading: state.articles.loading, error: state.articles.error, delete_loading: state.articles.delete_loading, delete_error: state.articles.delete_error});
+export const mapStateToProps = state => ({removed:state.articles.removed,articles: state.articles.data, loading: state.articles.loading, error: state.articles.error, delete_loading: state.articles.delete_loading, delete_error: state.articles.delete_error});
 
 export const mapDispatchToProps = dispatch => ({
   getArticlesList: (page) => {
@@ -177,5 +189,8 @@ export const mapDispatchToProps = dispatch => ({
   },
   getArticlesListByCategory: (id, page) => {
     dispatch(getArticlesListByCategory(id, page))
+  },
+  resetRemoved: () => {
+    dispatch(resetRemoved());
   }
 });
