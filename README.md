@@ -27,6 +27,8 @@ TODO:
 - Change styles of create/edit articles
 - Document/comment code. As I was in real rush, I did not have a chance to comment anything. However I tried to structure it to be understandable. Though prettier smashed my beauty and now it looks scary :D
 - Add posibility to load existing post image while editing post
+- Write tests
+- Have some rest :))
 
 _____
 
