@@ -8,8 +8,6 @@ import {EditorState, convertFromHTML, ContentState} from 'draft-js';
 
 import formatErrors from '../../utils/formatErrors.js';
 
-import {GET_SINGLE_ARTICLE, GET_SINGLE_ARTICLE_LOADING, GET_SINGLE_ARTICLE_LOADED, GET_SINGLE_ARTICLE_ERROR, getSingleArticle} from '../SingleArticle/SingleArticle-redux'
-
 //default editor state
 const defaultState = {
   title: '',
