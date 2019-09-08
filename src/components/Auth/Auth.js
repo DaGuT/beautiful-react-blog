@@ -13,7 +13,7 @@ const Auth = ({
         return <Component {...props} {...routerProps} />;
       }
       error("You need to log-in to access that page");
-      return <Redirect to="/login" />;
+      return <Redirect to={process.env.PUBLIC_URL +"/login"} />;
     }
   }
 />

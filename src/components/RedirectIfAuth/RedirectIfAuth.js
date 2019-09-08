@@ -13,7 +13,7 @@ const RedirectIfAuth = ({
           return <Component {...props} {...routerProps} />;
         }
         error("You're already signed it");
-        return <Redirect to="/" />;
+        return <Redirect to={process.env.PUBLIC_URL +"/"} />;
       }
     }
   />
