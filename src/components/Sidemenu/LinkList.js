@@ -1,15 +1,14 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 /* just array to li transformator */
 const LinkListView = ({links, location}) => (
   <Fragment>
     {links.map((link, i) => {
       //special link treatment
-      if (link.to===`/login` && localStorage.getItem('user')) return;
-      if (link.to===`/logout` && !localStorage.getItem('user')) return;
-      if (link.to===`/myarticles` && !localStorage.getItem('user')) return;
-      if (link.to===`/createarticle` && !localStorage.getItem('user')) return;
+      const isAuth = localStorage.getItem('user');
+      if ((isAuth && link.hideFor==="authUser") || (!isAuth && link.hideFor==="notAuthUser")) return;
 
       return <li
         key={i}
@@ -39,4 +38,17 @@ const LinkList = ({links, location}) => {
   );
 }
 
+const linksPropType = PropTypes.arrayOf(PropTypes.shape({
+  to: PropTypes.string.isRequired, //link where it should link
+  desc: PropTypes.string, //link subscription
+  name: PropTypes.string.isRequired, //link name
+  icon: PropTypes.string, //glyphicon icon name (after dash)
+  hideFor: PropTypes.arrayOf(['authUser','notAuthUser'])
+}));
+
+LinkList.propTypes = {
+  links: linksPropType
+};
+
+export {linksPropType};
 export default LinkList;

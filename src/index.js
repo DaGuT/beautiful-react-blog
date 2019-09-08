@@ -11,7 +11,9 @@ import config from "./config/config";
 //components
 import Sidemenu from './components/Sidemenu';
 import StaticBg from './components/StaticBg';
-import ErrorBlock from './components/ErrorBlock';
+import Auth from './components/Auth'; //redirect if user is not authenticated
+import RedirectIfAuth from './components/RedirectIfAuth'; //redirect if user is authenticated
+import ErrorBlock from './components/ErrorBlock'; //404 and something went wrong errors are stored inside
 
 //pages
 import Index from './routes/Index-route.js';
@@ -20,14 +22,15 @@ import Article from './routes/Article/';
 import CreateArticle from './routes/CreateArticle';
 import EditArticle from './routes/EditArticle';
 import MyArticles from './routes/MyArticles';
+import LoginRegister from './routes/LoginRegister/LoginRegister';
 
 //background image
 import niceBgImage from './assets/imgs/cityBg.jpg';
-import LoginRegister from './routes/LoginRegister/LoginRegister';
 
 ReactDOM.render(
   <Provider store={store}>
   <BrowserRouter>
+  {/* Sidemenu, links can be edited in config */}
     <Route
       component={(props) => <Sidemenu
       {...props}
@@ -55,13 +58,20 @@ ReactDOM.render(
         localStorage.removeItem('user');
       return (<Redirect to={process.env.PUBLIC_URL +"/"}/>);
     }}/>
+    {/* routes above will allways be displayed, except for ignoreLinks cases, described in them */}
 
+    {/* Switch to handle 404 errors */}
     <Switch>
-      <Route exact path={[process.env.PUBLIC_URL +'/login', process.env.PUBLIC_URL +'/register']} component={LoginRegister}/>
+      {/* Login and register are made within 1 component */}
+      <RedirectIfAuth exact path={[process.env.PUBLIC_URL +'/login', process.env.PUBLIC_URL +'/register']} component={LoginRegister}/>
+      {/* single article is displayed with this route */}
       <Route
         path={process.env.PUBLIC_URL + "/article/:id"}
         component={(props) => <Article {...props}/>}/> {/* single article page */}
-      <Route exact path={[process.env.PUBLIC_URL + "/"]} component={Index}/> {/* index page with articles list */}
+
+      {/* index page (simply list of articles in page 1) */}
+      <Route exact path={[process.env.PUBLIC_URL + "/"]} component={Index}/>
+      {/* this route is used to show articles at page :page */}
       <Route
         exact
         path={[
@@ -69,23 +79,27 @@ ReactDOM.render(
         process.env.PUBLIC_URL + "/articles"
       ]}
         component={Index}/>
+      {/* filtering articles by category, it's below articles at page because I have EXACT, so I dont need to worry switch will block filter */}
       <Route
         exact
         path={[
         process.env.PUBLIC_URL + "/articles/category/:id",
         process.env.PUBLIC_URL + "/articles/category/:id/page=:page"
       ]}
-        component={Category}/> {/* index page with articles list */}
+        component={Category}/>
       
-      <Route
+      {/* Article creation and editing */}
+      <Auth
         exact path={[process.env.PUBLIC_URL + "/createarticle"]}
         component={CreateArticle}/>
-      <Route
+      <Auth
         exact path={[process.env.PUBLIC_URL + "/editarticle/:id"]}
         component={EditArticle}/>
 
-      <Route exact path={process.env.PUBLIC_URL + '/myarticles'} component={MyArticles}/>
+      {/* list of articles that logged in used have */}
+      <Auth exact path={process.env.PUBLIC_URL + '/myarticles'} component={MyArticles}/>
 
+      {/* lovely 404 */}
       <Route component={(props) => <ErrorBlock error="404"/>}/>
     </Switch>
   </BrowserRouter>

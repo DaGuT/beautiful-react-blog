@@ -1,4 +1,6 @@
 const config = {
+  //link for sidemenu.
+  //Some of them will be shown depending on condition (user logged in our out)
   sidemenuLinks: [
     {
       to: "/",
@@ -13,29 +15,35 @@ const config = {
     }, {
       to: "/login",
       name: "Sign-in/Sign-up",
-      icon: "user"
+      icon: "user",
+      hideFor: "authUser"
     }, {
       to: "/createarticle",
       desc: "olala, come and post!",
       name: "Create article",
-      icon: "pencil"
+      icon: "pencil",
+      hideFor: "notAuthUser"
     }, {
       to: "/myarticles",
       name: "My articles",
       desc: "Go to list of my articles",
-      icon: "user"
+      icon: "user",
+      hideFor: "notAuthUser"
     }, {
       to: "/logout",
       name: "Logout",
-      icon: "fire"
+      icon: "fire",
+      hideFor: "notAuthUser"
     }
 
   ],
+  //text that will be visible on the left side of the pages (most pages)
   staticBgText: { //I've made it to config because I want it to be sidewide and I want to have all configurations in 1 place. Like a template settings in wordpress
     bigText: "DaGuT Was Here",
     smallText: "This is absoluetly configurable text. You can make these chanegs in config.js or" +
         " in Component props"
   },
+  //poorly documented remote api
   apiBaseUrl: "https://react-blog-api.bahdcasts.com/api"
 }
 

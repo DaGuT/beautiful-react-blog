@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 import isLinkInIgnoredList, {ignoredListPropType} from '../../utils/isLinkInIgnoredList';
 
-import LinkList from './LinkList';
+import LinkList,{linksPropType} from './LinkList';
 
 //just a button for bootstrap menu toggling
 const ToggleButton = () => {
@@ -85,12 +85,7 @@ const Sidemenu = ({location, links, ignoredLinks}) => {
 }
 
 Sidemenu.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.shape({
-    to: PropTypes.string.isRequired, //link where it should link
-    desc: PropTypes.string, //link subscription
-    name: PropTypes.string.isRequired, //link name
-    icon: PropTypes.string //glyphicon icon name (after dash)
-  })),
+  links: linksPropType,
   ...ignoredListPropType //each element is path where sidemenu should not be displayed
 }
 

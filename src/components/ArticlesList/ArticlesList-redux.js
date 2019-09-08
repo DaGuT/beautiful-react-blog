@@ -48,6 +48,9 @@ const getMyArticlesList = (page = 1) => async(dispatch, getState) => {
 
   //error handling
   try {
+
+    if (!token) throw(new Error("You need to sign-in first!")); 
+
     const response = await axios.get(`${config.apiBaseUrl}/user/articles`, {
       headers: {
         Authorization: `Bearer ${token}`,
