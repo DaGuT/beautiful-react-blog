@@ -11,7 +11,7 @@
     "draft-js": "^0.11.0",
     "draftjs-to-html": "^0.8.4",
     "jquery": "^3.4.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "noty": "^3.2.0-beta",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
